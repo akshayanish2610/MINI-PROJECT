@@ -29,7 +29,7 @@ class Mechanic(models.Model):
     def get_id(self):
         return self.user.id
     def __str__(self):
-        return self.user.first_name
+        return self.user.username
 
 
 class Request(models.Model):

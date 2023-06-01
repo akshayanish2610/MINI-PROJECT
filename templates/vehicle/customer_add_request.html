@@ -41,20 +41,29 @@
 <div>
   <form method="post" style="margin-left:200px;margin-right:200px;">
       {% csrf_token %}
-    <label for="category">Vehicle Category</label>
-    {% render_field enquiry.category class="form-control"  %}<br>
-
-    <label for="vehicle_no">Vehicle Number</label>
-    {% render_field enquiry.vehicle_no class="form-control" placeholder="Vehicle Number" %}
-
-    <label for="vehicle_name">Vehicle Name</label>
-    {% render_field enquiry.vehicle_name class="form-control" placeholder="Vehicle Name" %}
-
-    <label for="vehicle_brand">Vehicle Brand</label>
-    {% render_field enquiry.vehicle_brand class="form-control" placeholder="Vehicle Brand" %}
-
-    <label for="vehicle_model">Vehicle Model</label>
-    {% render_field enquiry.vehicle_model class="form-control" placeholder="Vehicle Model" %}
+      <label for="category">Vehicle Category</label>
+      <select name="category" class="form-control">
+        {% for choice in enquiry.category.field.choices %}
+          {% if choice.0 == vehicle.category %}
+            <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+          {% else %}
+            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    
+      <label for="vehicle_no">Vehicle Number</label>
+      {% render_field enquiry.vehicle_no value=vehicle.vehicle_no class="form-control" placeholder="eg:KL06M4323" %}
+    
+      <label for="vehicle_name">Vehicle Name</label>
+      {% render_field enquiry.vehicle_name value=vehicle.vehicle_name class="form-control" placeholder="eg:SWIFT" %}
+    
+      <label for="vehicle_brand">Vehicle Brand</label>
+      {% render_field enquiry.vehicle_brand value=vehicle.vehicle_brand class="form-control" placeholder="eg:SUZUKI" %}
+    
+      <label for="vehicle_model">Vehicle Model</label>
+      {% render_field enquiry.vehicle_model value=vehicle.vehicle_model class="form-control" placeholder="eg:2020" %}
+    
 
     <label for="Km_Driven">Km_Driven</label>
     {% render_field enquiry.Km_Driven class="form-control" placeholder="Km_Driven" %}

@@ -549,10 +549,16 @@ def customer_view_approved_request_invoice_view(request):
 @user_passes_test(is_customer)
 def customer_add_request_view(request):
     customer=models.Customer.objects.get(user_id=request.user.id)
+    
+    print("hh")
+    
+    vehicle=models.Request.objects.filter(customer=customer).first()
+    print(vehicle)
     enquiry=forms.RequestForm()
     if request.method=='POST':
         enquiry=forms.RequestForm(request.POST)
         if enquiry.is_valid():
+            s=request.POST["category"]
             customer=models.Customer.objects.get(user_id=request.user.id)
             enquiry_x=enquiry.save(commit=False)
             enquiry_x.customer=customer
@@ -560,7 +566,7 @@ def customer_add_request_view(request):
         else:
             print("form is invalid")
         return HttpResponseRedirect('customer-dashboard')
-    return render(request,'vehicle/customer_add_request.html',{'enquiry':enquiry,'customer':customer})
+    return render(request,'vehicle/customer_add_request.html',{'enquiry':enquiry,'customer':customer,'vehicle':vehicle})
 
 
 @login_required(login_url='customerlogin')
